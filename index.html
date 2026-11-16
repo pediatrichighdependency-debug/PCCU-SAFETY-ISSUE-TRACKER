@@ -175,7 +175,7 @@
 
     .reporting-nurse {
       opacity: 0;
-      animation-duration: 6s;
+      animation-duration: 8s;
       animation-timing-function: steps(1, end);
       animation-iteration-count: infinite;
     }
@@ -202,6 +202,14 @@
 
     .reporting-nurse--royal-down {
       animation-name: frameRoyalDown;
+    }
+
+    .reporting-nurse--navy-up {
+      animation-name: frameNavyUp;
+    }
+
+    .reporting-nurse--navy-down {
+      animation-name: frameNavyDown;
     }
 
     .tap-ripple {
@@ -403,33 +411,43 @@
     }
 
     @keyframes frameSkyUp {
-      0%, 24.99%, 100% { opacity: 1; }
-      25%, 99.99% { opacity: 0; }
+      0%, 18.74%, 100% { opacity: 1; }
+      18.75%, 99.99% { opacity: 0; }
     }
 
     @keyframes frameSkyDown {
-      0%, 24.99%, 33.33%, 100% { opacity: 0; }
-      25%, 33.32% { opacity: 1; }
+      0%, 18.74%, 25%, 100% { opacity: 0; }
+      18.75%, 24.99% { opacity: 1; }
     }
 
     @keyframes frameGreenUp {
-      0%, 33.32%, 58.33%, 100% { opacity: 0; }
-      33.33%, 58.32% { opacity: 1; }
+      0%, 24.99%, 43.75%, 100% { opacity: 0; }
+      25%, 43.74% { opacity: 1; }
     }
 
     @keyframes frameGreenDown {
-      0%, 58.32%, 66.66%, 100% { opacity: 0; }
-      58.33%, 66.65% { opacity: 1; }
+      0%, 43.74%, 50%, 100% { opacity: 0; }
+      43.75%, 49.99% { opacity: 1; }
     }
 
     @keyframes frameRoyalUp {
-      0%, 66.65%, 91.66%, 100% { opacity: 0; }
-      66.66%, 91.65% { opacity: 1; }
+      0%, 49.99%, 68.75%, 100% { opacity: 0; }
+      50%, 68.74% { opacity: 1; }
     }
 
     @keyframes frameRoyalDown {
-      0%, 91.65%, 100% { opacity: 0; }
-      91.66%, 99.99% { opacity: 1; }
+      0%, 68.74%, 75%, 100% { opacity: 0; }
+      68.75%, 74.99% { opacity: 1; }
+    }
+
+    @keyframes frameNavyUp {
+      0%, 74.99%, 93.75%, 100% { opacity: 0; }
+      75%, 93.74% { opacity: 1; }
+    }
+
+    @keyframes frameNavyDown {
+      0%, 93.74%, 100% { opacity: 0; }
+      93.75%, 99.99% { opacity: 1; }
     }
 
     @keyframes tapRipple {
@@ -638,6 +656,30 @@
         <img
           class="reporting-nurse reporting-nurse--royal-down"
           src="./pccu-nurse-royal-down.png?v=1"
+          alt=""
+          width="486"
+          height="520"
+          decoding="async"
+        >
+      </picture>
+
+      <picture>
+        <source srcset="./pccu-nurse-navy-up.webp?v=1" type="image/webp">
+        <img
+          class="reporting-nurse reporting-nurse--navy-up"
+          src="./pccu-nurse-navy-up.png?v=1"
+          alt=""
+          width="486"
+          height="520"
+          decoding="async"
+        >
+      </picture>
+
+      <picture>
+        <source srcset="./pccu-nurse-navy-down.webp?v=1" type="image/webp">
+        <img
+          class="reporting-nurse reporting-nurse--navy-down"
+          src="./pccu-nurse-navy-down.png?v=1"
           alt=""
           width="486"
           height="520"
