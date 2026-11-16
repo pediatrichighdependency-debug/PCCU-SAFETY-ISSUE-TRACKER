@@ -1,345 +1,843 @@
 <!doctype html>
+
 <html lang="en">
+
 <head>
+
   <meta charset="utf-8">
 
   <meta
+
     name="viewport"
+
     content="width=device-width, initial-scale=1, viewport-fit=cover"
+
   >
 
   <meta name="theme-color" content="#031d2d">
+
   <meta name="apple-mobile-web-app-title" content="PCCU Safety Tracker">
+
   <meta name="apple-mobile-web-app-capable" content="yes">
+
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
   <meta name="mobile-web-app-capable" content="yes">
 
   <title>PCCU Safety Tracker</title>
 
   <link rel="apple-touch-icon" href="./apple-touch-icon.png?v=4">
+
   <link rel="apple-touch-icon" sizes="72x72" href="./icon-72.png?v=4">
+
   <link rel="apple-touch-icon" sizes="120x120" href="./icon-120.png?v=4">
+
   <link rel="apple-touch-icon" sizes="144x144" href="./icon-144.png?v=4">
+
   <link rel="apple-touch-icon" sizes="152x152" href="./icon-152.png?v=4">
+
   <link rel="apple-touch-icon" sizes="167x167" href="./icon-167.png?v=4">
+
   <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=4">
+
   <link rel="apple-touch-icon-precomposed" href="./apple-touch-icon.png?v=4">
 
   <link rel="icon" type="image/png" sizes="16x16" href="./icon-16.png?v=4">
+
   <link rel="icon" type="image/png" sizes="32x32" href="./icon-32.png?v=4">
+
   <link rel="icon" type="image/png" sizes="48x48" href="./icon-48.png?v=4">
+
   <link rel="icon" type="image/png" sizes="72x72" href="./icon-72.png?v=4">
+
   <link rel="icon" type="image/png" sizes="96x96" href="./icon-96.png?v=4">
+
   <link rel="icon" type="image/png" sizes="144x144" href="./icon-144.png?v=4">
+
   <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png?v=4">
+
   <link rel="icon" type="image/png" sizes="256x256" href="./icon-256.png?v=4">
+
   <link rel="icon" type="image/png" sizes="384x384" href="./icon-384.png?v=4">
+
   <link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png?v=4">
 
   <link rel="manifest" href="./manifest.webmanifest?v=4">
 
   <link rel="preconnect" href="https://script.google.com">
+
   <link rel="dns-prefetch" href="//script.google.com">
+
   <link rel="dns-prefetch" href="//script.googleusercontent.com">
 
   <script>
+
     (function () {
-      var installed =
+
+      var storageKey = "pccu-safety-tracker-installed-v1";
+
+      var standalone =
+
         window.navigator.standalone === true ||
+
         (
+
           window.matchMedia &&
+
           window.matchMedia("(display-mode: standalone)").matches
+
         );
 
-      if (installed) {
-        document.documentElement.classList.add("installed-app");
+      var remembered = false;
+
+      try {
+
+        remembered =
+
+          window.localStorage.getItem(storageKey) === "yes";
+
+      } catch (error) {
+
+        remembered = false;
+
       }
+
+      if (standalone || remembered) {
+
+        document.documentElement.classList.add("installed-app");
+
+      }
+
+      if (standalone) {
+
+        try {
+
+          window.localStorage.setItem(storageKey, "yes");
+
+        } catch (error) {
+
+          /* Storage may be unavailable in private browsing. */
+
+        }
+
+      }
+
     })();
+
   </script>
 
   <style>
+
     * {
+
       box-sizing: border-box;
+
       -webkit-tap-highlight-color: transparent;
+
     }
 
     html,
+
     body {
+
       width: 100%;
+
       min-height: 100%;
+
       margin: 0;
+
       background: #031d2d;
+
       font-family: Arial, Helvetica, sans-serif;
+
     }
 
     body {
+
       display: flex;
+
       align-items: center;
+
       justify-content: center;
+
       min-height: 100vh;
+
       min-height: 100dvh;
+
       padding:
+
         calc(30px + env(safe-area-inset-top))
+
         22px
+
         calc(34px + env(safe-area-inset-bottom));
+
       color: #ffffff;
+
       text-align: center;
+
     }
 
     .launcher {
+
       width: 100%;
+
       max-width: 470px;
+
       margin: auto;
+
     }
 
     .app-icon {
+
       display: block;
+
       width: min(52vw, 220px);
+
       height: min(52vw, 220px);
+
       margin: 0 auto 28px;
+
       border: 4px solid rgba(255, 255, 255, 0.28);
+
       border-radius: 46px;
+
       object-fit: cover;
+
       background: #ffffff;
+
       box-shadow:
+
         0 18px 50px rgba(0, 0, 0, 0.38),
+
         0 0 32px rgba(40, 185, 239, 0.22);
+
     }
 
     h1 {
+
       margin: 0;
+
       color: #ffffff;
+
       font-size: clamp(33px, 8.5vw, 52px);
+
       line-height: 1.08;
+
       font-weight: 800;
+
       letter-spacing: -1px;
+
     }
 
     .subtitle {
+
       margin: 22px auto 0;
+
       color: #bfeaff;
+
       font-size: clamp(18px, 5.2vw, 27px);
+
       line-height: 1.35;
+
       font-weight: 700;
+
     }
 
     .open-button {
+
       display: flex;
+
       align-items: center;
+
       justify-content: center;
+
       width: 100%;
+
       min-height: 80px;
+
       margin-top: 42px;
+
       padding: 20px;
+
       border: 0;
+
       border-radius: 28px;
+
       background: linear-gradient(
+
         180deg,
+
         #56ddf6 0%,
+
         #21b8e5 100%
+
       );
+
       box-shadow:
+
         0 14px 34px rgba(0, 0, 0, 0.28),
+
         inset 0 1px 0 rgba(255, 255, 255, 0.55);
+
       color: #032844;
+
       font-size: clamp(21px, 5.7vw, 30px);
+
       line-height: 1.15;
+
       font-weight: 900;
+
       text-decoration: none;
+
       text-transform: uppercase;
+
     }
 
-    .open-button:active {
+    .open-button:active,
+
+    .saved-button:active {
+
       transform: scale(0.985);
+
       opacity: 0.94;
+
     }
 
     .install-heading {
+
       margin: 36px 0 14px;
+
       color: #ffffff;
+
       font-size: 22px;
+
       line-height: 1.25;
+
       font-weight: 800;
+
     }
 
     .instruction {
+
       width: 100%;
+
       padding: 20px 18px;
+
       background: rgba(255, 255, 255, 0.96);
+
       border: 2px solid rgba(157, 218, 243, 0.75);
+
       border-radius: 22px;
+
       box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+
       text-align: left;
+
     }
 
     .platform-title {
+
       color: #0b3a83;
+
       font-size: 18px;
+
       line-height: 1.25;
+
       font-weight: 800;
+
     }
 
     .platform-steps {
+
       margin-top: 7px;
+
       color: #314d61;
+
       font-size: 16px;
+
       line-height: 1.5;
+
       font-weight: 500;
+
     }
 
     .platform-divider {
+
       width: 100%;
+
       height: 1px;
+
       margin: 17px 0;
+
       background: #cde1ed;
+
+    }
+
+    .saved-button {
+
+      display: block;
+
+      width: 100%;
+
+      min-height: 58px;
+
+      margin-top: 18px;
+
+      padding: 14px 16px;
+
+      border: 2px solid rgba(157, 218, 243, 0.9);
+
+      border-radius: 18px;
+
+      background: rgba(255, 255, 255, 0.96);
+
+      color: #0b3a83;
+
+      font-family: Arial, Helvetica, sans-serif;
+
+      font-size: 17px;
+
+      line-height: 1.25;
+
+      font-weight: 800;
+
+      cursor: pointer;
+
     }
 
     .important-note {
+
       margin: 22px auto 0;
+
       padding: 14px 16px;
+
       border: 1px solid rgba(117, 212, 244, 0.5);
+
       border-radius: 15px;
+
       background: rgba(12, 68, 96, 0.72);
+
       color: #dff7ff;
+
       font-size: 14px;
+
       line-height: 1.45;
+
+    }
+
+    .installed-status {
+
+      display: none;
+
+      width: 100%;
+
+      margin-top: 22px;
+
+      padding: 14px 16px;
+
+      border: 1px solid rgba(117, 212, 244, 0.55);
+
+      border-radius: 15px;
+
+      background: rgba(12, 68, 96, 0.72);
+
+      color: #dff7ff;
+
+      font-family: Arial, Helvetica, sans-serif;
+
+      font-size: 15px;
+
+      line-height: 1.4;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
     }
 
     .installed-app .install-heading,
+
     .installed-app .instruction,
+
+    .installed-app .saved-button,
+
     .installed-app .important-note {
+
       display: none;
+
+    }
+
+    .installed-app .installed-status {
+
+      display: block;
+
     }
 
     .installed-app .open-button {
+
       margin-top: 45px;
+
     }
 
     @media (max-width: 360px) {
+
       body {
+
         padding-left: 16px;
+
         padding-right: 16px;
+
       }
 
       .instruction {
+
         padding: 18px 15px;
+
       }
 
       .platform-title {
+
         font-size: 17px;
+
       }
 
       .platform-steps {
+
         font-size: 15px;
+
       }
+
     }
 
     @media (max-height: 700px) {
+
       body {
+
         align-items: flex-start;
+
       }
 
       .app-icon {
+
         width: 140px;
+
         height: 140px;
+
         margin-bottom: 18px;
+
         border-radius: 32px;
+
       }
 
       h1 {
+
         font-size: 34px;
+
       }
 
       .subtitle {
+
         margin-top: 14px;
+
         font-size: 19px;
+
       }
 
       .open-button {
+
         min-height: 64px;
+
         margin-top: 26px;
+
         font-size: 21px;
+
       }
 
       .install-heading {
+
         margin-top: 28px;
+
       }
+
     }
+
   </style>
+
 </head>
 
 <body>
+
   <main class="launcher">
+
     <img
+
       class="app-icon"
+
       src="./apple-touch-icon.png?v=4"
+
       alt="PCCU Safety Tracker"
+
       width="220"
+
       height="220"
+
       decoding="async"
+
     >
 
     <h1>PCCU Safety Tracker</h1>
 
     <p class="subtitle">
+
       Pediatric Critical Care Unit<br>
+
       Safety Issue Tracker
+
     </p>
 
     <a
+
       class="open-button"
+
       href="https://script.google.com/macros/s/AKfycbykcsD97cNiCPRp7t8oP96_jdLGpd5oxxAxqd2CLV8-iEUgtzr3Kh9KXTgfVcPYIf7_yQ/exec"
+
     >
+
       Open PCCU Safety Tracker
+
     </a>
 
     <h2 class="install-heading">
+
       Install on your home screen
+
     </h2>
 
     <section class="instruction">
+
       <div class="platform-title">
+
         iPhone or iPad
+
       </div>
 
       <div class="platform-steps">
+
         Tap <strong>Share</strong>, select
+
         <strong>“Add to Home Screen”</strong>,
+
         then tap <strong>“Add.”</strong>
+
       </div>
 
       <div class="platform-divider"></div>
 
       <div class="platform-title">
+
         Android using Chrome
+
       </div>
 
       <div class="platform-steps">
+
         Tap the <strong>three-dot menu ⋮</strong>,
+
         select <strong>“Install app”</strong> or
+
         <strong>“Add to Home screen,”</strong>
+
         then tap <strong>“Install”</strong> or
+
         <strong>“Add.”</strong>
+
       </div>
 
       <div class="platform-divider"></div>
 
       <div class="platform-title">
+
         Samsung Internet
+
       </div>
 
       <div class="platform-steps">
+
         Tap the <strong>menu ☰</strong>,
+
         select <strong>“Add page to,”</strong>,
+
         then select <strong>“Home screen.”</strong>
+
       </div>
+
     </section>
 
+    <button
+
+      class="saved-button"
+
+      id="savedButton"
+
+      type="button"
+
+    >
+
+      I HAVE ALREADY SAVED THE APP
+
+    </button>
+
     <p class="important-note">
+
       Install this launcher while this page is visible.
+
       Do not open the Apps Script page before installing
+
       if you want to keep the customized PCCU icon.
+
     </p>
+
+    <button
+
+      class="installed-status"
+
+      id="installedStatus"
+
+      type="button"
+
+    >
+
+      ✓ PCCU Safety Tracker is already saved on this phone
+
+    </button>
+
   </main>
+
+  <script>
+
+    (function () {
+
+      var storageKey = "pccu-safety-tracker-installed-v1";
+
+      var savedButton =
+
+        document.getElementById("savedButton");
+
+      var installedStatus =
+
+        document.getElementById("installedStatus");
+
+      function isRemembered() {
+
+        try {
+
+          return (
+
+            window.localStorage.getItem(storageKey) === "yes"
+
+          );
+
+        } catch (error) {
+
+          return false;
+
+        }
+
+      }
+
+      function rememberInstallation() {
+
+        try {
+
+          window.localStorage.setItem(storageKey, "yes");
+
+        } catch (error) {
+
+          /* Continue even when storage is unavailable. */
+
+        }
+
+        document.documentElement.classList.add(
+
+          "installed-app"
+
+        );
+
+      }
+
+      savedButton.addEventListener("click", function () {
+
+        if (isRemembered()) {
+
+          window.alert(
+
+            "PCCU Safety Tracker is already saved on this phone. " +
+
+            "Open it using the customized home-screen icon."
+
+          );
+
+          return;
+
+        }
+
+        rememberInstallation();
+
+        window.alert(
+
+          "Saved. Installation instructions will now stay hidden " +
+
+          "in this browser. Open PCCU Safety Tracker using the " +
+
+          "customized home-screen icon."
+
+        );
+
+      });
+
+      installedStatus.addEventListener(
+
+        "click",
+
+        function () {
+
+          window.alert(
+
+            "PCCU Safety Tracker is already marked as saved " +
+
+            "on this phone. Open it using the customized " +
+
+            "home-screen icon."
+
+          );
+
+        }
+
+      );
+
+      window.addEventListener(
+
+        "appinstalled",
+
+        function () {
+
+          rememberInstallation();
+
+          window.alert(
+
+            "PCCU Safety Tracker has been installed successfully."
+
+          );
+
+        }
+
+      );
+
+    })();
+
+  </script>
+
 </body>
+
 </html>
