@@ -94,6 +94,7 @@
       justify-content: center;
       min-height: 100vh;
       min-height: 100dvh;
+      padding: 30px 22px 34px;
       padding:
         calc(30px + env(safe-area-inset-top))
         22px
@@ -110,9 +111,11 @@
 
     .app-icon {
       display: block;
-      width: min(52vw, 220px);
-      height: min(52vw, 220px);
-      margin: 0 auto 28px;
+      width: 52vw;
+      height: 52vw;
+      max-width: 220px;
+      max-height: 220px;
+      margin: 0 auto 12px;
       border: 4px solid rgba(255, 255, 255, 0.28);
       border-radius: 46px;
       object-fit: cover;
@@ -122,28 +125,11 @@
         0 0 32px rgba(40, 185, 239, 0.22);
     }
 
-    h1 {
-      margin: 0;
-      color: #ffffff;
-      font-size: clamp(33px, 8.5vw, 52px);
-      line-height: 1.08;
-      font-weight: 800;
-      letter-spacing: -1px;
-    }
-
-    .subtitle {
-      margin: 22px auto 0;
-      color: #bfeaff;
-      font-size: clamp(18px, 5.2vw, 27px);
-      line-height: 1.35;
-      font-weight: 700;
-    }
-
     .reporting-animation {
       position: relative;
       width: 205px;
       height: 218px;
-      margin: 26px auto 0;
+      margin: 8px auto 0;
       overflow: visible;
       isolation: isolate;
       transform-origin: 50% 85%;
@@ -166,6 +152,10 @@
 
     .reporting-nurse {
       position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
       inset: 0;
       display: block;
       width: 100%;
@@ -262,6 +252,7 @@
         0 14px 34px rgba(0, 0, 0, 0.28),
         inset 0 1px 0 rgba(255, 255, 255, 0.55);
       color: #032844;
+      font-size: 24px;
       font-size: clamp(21px, 5.7vw, 30px);
       line-height: 1.15;
       font-weight: 900;
@@ -504,7 +495,7 @@
       }
     }
 
-    @media (max-height: 700px) {
+    @media (max-height: 820px) {
       body {
         align-items: flex-start;
       }
@@ -514,15 +505,6 @@
         height: 140px;
         margin-bottom: 18px;
         border-radius: 32px;
-      }
-
-      h1 {
-        font-size: 34px;
-      }
-
-      .subtitle {
-        margin-top: 14px;
-        font-size: 19px;
       }
 
       .reporting-animation {
@@ -577,13 +559,6 @@
       height="220"
       decoding="async"
     >
-
-    <h1>PCCU Safety Tracker</h1>
-
-    <p class="subtitle">
-      Pediatric Critical Care Unit<br>
-      Safety Issue Tracker
-    </p>
 
     <div
       class="reporting-animation"
